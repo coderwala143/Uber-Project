@@ -557,3 +557,96 @@ curl -X POST http://localhost:3000/captains/login \
   "password": "password123"
 }'
 ```
+
+## Endpoint: `/captains/profile`
+
+### Method: GET
+
+### Description:
+Get the authenticated captain's profile information. Requires a valid JWT token.
+
+### Authentication:
+Requires Bearer token in Authorization header or token in cookies.
+
+### Responses:
+
+#### Success (200 OK):
+
+  ```json
+  {
+    "_id": "CAPTAIN_ID",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    },
+    "socketId": null,
+    "status": "inactive",
+    "location": {
+      "lat": null,
+      "lng": null
+    }
+  }
+  ```
+
+#### Error Response:
+If authentication is required, the response will be a JSON object containing the following field:
+
+- `message` (string): The error message.
+
+Example:
+```json
+{
+  "message": "Authentication required"
+}
+```
+
+### Example Request
+```bash
+curl -X GET http://localhost:3000/captains/profile \
+-H "Authorization: Bearer JWT_TOKEN"
+```
+
+## Endpoint: `/captains/logout`
+
+### Method: GET
+
+### Description:
+This endpoint is used to log out an authenticated captain. It invalidates the captain's JWT token.
+
+### Authentication:
+Requires Bearer token in Authorization header or token in cookies.
+
+### Response:
+Success (200 OK):
+Description: Captain logged out successfully.
+Response Body:
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+#### Error Response:
+If authentication is required, the response will be a JSON object containing the following field:
+
+- `message` (string): The error message.
+
+Example:
+```json
+{
+  "message": "Authentication required"
+}
+```
+
+### Example Request
+```bash
+curl -X GET http://localhost:3000/captains/logout \
+-H "Authorization: Bearer JWT_TOKEN"
+```
